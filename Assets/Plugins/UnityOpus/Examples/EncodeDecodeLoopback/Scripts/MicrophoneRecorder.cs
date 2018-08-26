@@ -3,15 +3,23 @@ using System;
 
 namespace UnityOpus.Example {
     public class MicrophoneRecorder : MonoBehaviour {
+        public event Action<float[]> OnAudioReady;
+
         const int samplingFrequency = 48000;
         const int lengthSeconds = 1;
 
         AudioClip clip;
         int head = 0;
-        float[] processBuffer = new float[1024];
+        float[] processBuffer = new float[512];
         float[] microphoneBuffer = new float[lengthSeconds * samplingFrequency];
 
-        public event Action<float[]> OnAudioReady;
+        public float GetRMS() {
+            float sum = 0.0f;
+            foreach (var sample in processBuffer) {
+                sum += sample * sample;
+            }
+            return Mathf.Sqrt(sum / processBuffer.Length);
+        }
 
         void Start() {
             clip = Microphone.Start(null, true, lengthSeconds, samplingFrequency);

@@ -1,16 +1,21 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
 using UnityEngine;
-using System.Collections.Concurrent;
 
 namespace UnityOpus.Example {
     [RequireComponent(typeof(MicrophoneDecoder), typeof(AudioSource))]
     public class LoopbackPlayer : MonoBehaviour {
+        public int bufferCount {
+            get { return pcmBuffer.Count; }
+        }
+
+        const int bufferLengthGoal = 4000;
         const NumChannels channels = NumChannels.Mono;
         const SamplingFrequency frequency = SamplingFrequency.Frequency_48000;
         AudioSource source;
         MicrophoneDecoder decoder;
         ConcurrentQueue<float> pcmBuffer = new ConcurrentQueue<float>();
+        int prepareBufferLength;
+        bool preparing = true;
 
         MicrophoneRecorder recorder;
 
@@ -22,37 +27,59 @@ namespace UnityOpus.Example {
             decoder = GetComponent<MicrophoneDecoder>();
             decoder.OnDecoded += OnDecoded;
 
-            //recorder = GetComponent<MicrophoneRecorder>();
-            //recorder.OnAudioReady += OnAudioReady;
-
-            Debug.Log(AudioSettings.outputSampleRate);
+            int dspBufferLength;
+            int bufferCount;
+            AudioSettings.GetDSPBufferSize(out dspBufferLength, out bufferCount);
+            prepareBufferLength = dspBufferLength * 2;
         }
 
         void OnDisable() {
             decoder.OnDecoded -= OnDecoded;
-            //recorder.OnAudioReady -= OnAudioReady;
             source.Stop();
-        }
-
-        void OnDecoded(float[] pcm, int pcmLength) {
-            for (int i = 0; i < pcmLength; i++) {
-                pcmBuffer.Enqueue(pcm[i]);
+            while (!pcmBuffer.IsEmpty) {
+                float dummy;
+                pcmBuffer.TryDequeue(out dummy);
             }
         }
 
-        void OnAudioReady(float[] pcm) {
-            for (int i = 0; i < pcm.Length; i++) {
+        void OnDecoded(float[] pcm, int pcmLength) {
+            if (preparing) {
+                if (pcmBuffer.Count + pcmLength > prepareBufferLength) {
+                    for (int i = 0; i < pcmBuffer.Count + pcmLength - prepareBufferLength; i++) {
+                        float dummy;
+                        pcmBuffer.TryDequeue(out dummy);
+                    }
+                }
+            }
+            for (int i = 0; i < pcmLength; i++) {
                 pcmBuffer.Enqueue(pcm[i]);
+            }
+            if (pcmBuffer.Count > bufferLengthGoal) {
+                for (int i = 0; i < pcmBuffer.Count - bufferLengthGoal / 2; i++) {
+                    float dummy;
+                    pcmBuffer.TryDequeue(out dummy);
+                }
             }
         }
 
         void OnAudioFilterRead(float[] data, int channels) {
+            if (preparing && pcmBuffer.Count > data.Length / channels) {
+                preparing = false;
+            }
+            if (preparing) {
+                for (int i = 0; i < data.Length; i++) {
+                    data[i] = 0;
+                }
+                return;
+            }
             if (pcmBuffer.Count < data.Length / channels) {
+                Debug.LogWarning("Buffer underrun");
                 return;
             }
             for (int i = 0; i < data.Length; i += channels) {
                 float sample;
                 pcmBuffer.TryDequeue(out sample);
+                // mono to stereo upmix
                 data[i] = sample * 0.7080f; // -3dB
                 data[i + 1] = sample * 0.7080f; // -3dB
             }
