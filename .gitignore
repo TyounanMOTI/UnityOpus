@@ -6,6 +6,8 @@
 [Rr]elease/
 [Dd]ebug/
 Assets/AssetStoreTools*
+.DS_Store
+xcuserdata/
 
 # Visual Studio cache directory
 .vs/
