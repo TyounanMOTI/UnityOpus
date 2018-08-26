@@ -7,7 +7,7 @@ namespace UnityOpus.Example {
     public class LoopbackPlayer : MonoBehaviour {
         const NumChannels channels = NumChannels.Mono;
         const SamplingFrequency frequency = SamplingFrequency.Frequency_48000;
-        const int audioClipLength = 4096;
+        const int audioClipLength = 1024 * 6;
         AudioSource source;
         MicrophoneDecoder decoder;
         int head = 0;
@@ -36,7 +36,7 @@ namespace UnityOpus.Example {
             Array.Copy(pcm, audioClipData, pcmLength);
             source.clip.SetData(audioClipData, head);
             head += pcmLength;
-            if (!source.isPlaying && head > audioClipLength) {
+            if (!source.isPlaying && head > audioClipLength / 2) {
                 source.Play();
             }
             head %= audioClipLength;
