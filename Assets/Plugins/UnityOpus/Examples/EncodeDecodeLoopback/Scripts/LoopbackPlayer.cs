@@ -73,7 +73,7 @@ namespace UnityOpus.Example {
                 return;
             }
             if (pcmBuffer.Count < data.Length / channels) {
-                Debug.LogWarning("Buffer underrun");
+                //Debug.LogWarning("Buffer underrun");
                 return;
             }
             for (int i = 0; i < data.Length; i += channels) {
