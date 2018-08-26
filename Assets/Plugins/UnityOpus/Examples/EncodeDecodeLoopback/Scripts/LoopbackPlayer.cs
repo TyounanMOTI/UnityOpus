@@ -30,7 +30,7 @@ namespace UnityOpus.Example {
             int dspBufferLength;
             int bufferCount;
             AudioSettings.GetDSPBufferSize(out dspBufferLength, out bufferCount);
-            prepareBufferLength = dspBufferLength * 2;
+            prepareBufferLength = dspBufferLength / (int)channels * 2;
         }
 
         void OnDisable() {
@@ -54,16 +54,10 @@ namespace UnityOpus.Example {
             for (int i = 0; i < pcmLength; i++) {
                 pcmBuffer.Enqueue(pcm[i]);
             }
-            if (pcmBuffer.Count > bufferLengthGoal) {
-                for (int i = 0; i < pcmBuffer.Count - bufferLengthGoal / 2; i++) {
-                    float dummy;
-                    pcmBuffer.TryDequeue(out dummy);
-                }
-            }
         }
 
         void OnAudioFilterRead(float[] data, int channels) {
-            if (preparing && pcmBuffer.Count > data.Length / channels) {
+            if (preparing && pcmBuffer.Count > prepareBufferLength) {
                 preparing = false;
             }
             if (preparing) {
@@ -73,12 +67,17 @@ namespace UnityOpus.Example {
                 return;
             }
             if (pcmBuffer.Count < data.Length / channels) {
-                Debug.LogWarning("Buffer underrun");
+                //Debug.LogWarning("Buffer underrun");
                 return;
             }
+            Debug.Log(pcmBuffer.Count);
             for (int i = 0; i < data.Length; i += channels) {
                 float sample;
-                pcmBuffer.TryDequeue(out sample);
+                var dequeSuccess = pcmBuffer.TryDequeue(out sample);
+                if (!dequeSuccess) {
+                    //Debug.LogWarning("Buffer depleted.");
+                    continue;
+                }
                 // mono to stereo upmix
                 data[i] = sample * 0.7080f; // -3dB
                 data[i + 1] = sample * 0.7080f; // -3dB
