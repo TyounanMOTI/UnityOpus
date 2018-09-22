@@ -1,6 +1,13 @@
 # UnityOpus
 libopus bridge for Unity.
 
+# Requirements
+UnityOpus is tested on following environments:
+- Windows 10
+- Mac OS X
+
+TBD for other environments.
+
 # Documentation
 TBD.
 
