@@ -1,10 +1,12 @@
+Release/
+Debug/
+Logs/
+
 [Ll]ibrary/
 [Tt]emp/
 [Oo]bj/
 [Bb]uild/
 [Bb]uilds/
-[Rr]elease/
-[Dd]ebug/
 Assets/AssetStoreTools*
 .DS_Store
 xcuserdata/
@@ -17,7 +19,7 @@ ExportedObj/
 .consulo/
 *.csproj
 *.unityproj
-*.sln
+/*.sln
 *.suo
 *.tmp
 *.user
