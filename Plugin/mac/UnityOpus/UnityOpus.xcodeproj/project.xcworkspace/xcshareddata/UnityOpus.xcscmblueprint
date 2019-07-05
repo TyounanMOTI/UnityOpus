@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "7D1858D94E766B08DA6CAE0134753D7C934AD040",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "7D1858D94E766B08DA6CAE0134753D7C934AD040" : 9223372036854775807,
+    "60C590E0A1E3A270911208E27AD0681DC1AAA138" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "B67C57FB-152B-4620-9FC3-532180EE62F0",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "7D1858D94E766B08DA6CAE0134753D7C934AD040" : "UnityOpus\/",
+    "60C590E0A1E3A270911208E27AD0681DC1AAA138" : "opus\/"
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "UnityOpus",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "Plugin\/mac\/UnityOpus\/UnityOpus.xcodeproj",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/xiph\/opus.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "60C590E0A1E3A270911208E27AD0681DC1AAA138"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/TyounanMOTI\/UnityOpus.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7D1858D94E766B08DA6CAE0134753D7C934AD040"
+    }
+  ]
+}
