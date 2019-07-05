@@ -3,6 +3,7 @@ Logs/
 Assets/Plugins/Editor
 Assets/Plugins/Editor.meta
 Plugin/libopus/src
+Plugin/x64/
 
 [Ll]ibrary/
 [Tt]emp/
