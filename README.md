@@ -5,6 +5,7 @@ libopus bridge for Unity.
 UnityOpus is tested on following environments:
 - Windows 10
 - Mac OS X
+- Android (Oculus Quest)
 
 TBD for other environments.
 
