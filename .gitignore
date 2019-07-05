@@ -1,6 +1,9 @@
+.idea/
 Release/
 Debug/
 Logs/
+Assets/Plugins/Editor
+Assets/Plugins/Editor.meta
 
 [Ll]ibrary/
 [Tt]emp/

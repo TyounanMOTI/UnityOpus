@@ -41,7 +41,11 @@ namespace UnityOpus {
     public class Library {
         public const int maximumPacketDuration = 5760;
 
+#if UNITY_ANDROID
+        const string dllName = "unityopus";
+#else
         const string dllName = "UnityOpus";
+#endif
 
         [DllImport(dllName)]
         public static extern IntPtr OpusEncoderCreate(
