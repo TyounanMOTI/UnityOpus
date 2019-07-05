@@ -4,6 +4,7 @@ Debug/
 Logs/
 Assets/Plugins/Editor
 Assets/Plugins/Editor.meta
+Plugin/libopus/src
 
 [Ll]ibrary/
 [Tt]emp/
