@@ -43,6 +43,8 @@ namespace UnityOpus {
 
 #if UNITY_ANDROID
         const string dllName = "unityopus";
+#elif UNITY_IOS
+        const string dllName = "__Internal";
 #else
         const string dllName = "UnityOpus";
 #endif
