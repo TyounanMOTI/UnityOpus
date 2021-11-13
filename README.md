@@ -4,7 +4,7 @@ libopus bridge for Unity.
 # Requirements
 UnityOpus is tested on following environments:
 - Windows 10
-- Mac OS X
+- macOS 11.0 or newer
 - Android (Oculus Quest)
 
 TBD for other environments.
